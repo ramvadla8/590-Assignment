@@ -42,6 +42,12 @@ public class TreasureHunter : MonoBehaviour
     private int CapsuleCount = 0;
     private int CylinderCount = 0;
 
+    public GameObject root;
+
+    bool trapHit = false;
+
+    public Rigidbody gameObjectsRigidBody; 
+
     // private int SphereScore = 0;
     // private int CubeScore = 0;
     // private int CapsuleScore = 0;
@@ -60,16 +66,7 @@ public class TreasureHunter : MonoBehaviour
     {
         
         
-        // if(Input.GetMouseButtonDown(0)){
-
-
-
-            
-        // RaycastHit hit;
-        // // Does the ray intersect any objects excluding the player layer
-        // if (Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit))
-        // {
-        //     
+     
         
     }
 
@@ -165,5 +162,24 @@ public class TreasureHunter : MonoBehaviour
 
                 Destroy(other.gameObject);
             }
+
+
+        // COde to add rigid body: https://answers.unity.com/questions/19466/how-do-i-add-a-rigidbody-in-script.html
+
+        if (numItems == 5)
+        {
+            gameObjectsRigidBody = root.AddComponent<Rigidbody>(); //Add the rigidbody.
+            gameObjectsRigidBody.mass = 5; // Set the GO's mass to 5 via the Rigidbody.
+            trapHit = true; 
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (trapHit)
+        {
+            gameObjectsRigidBody.AddForce(transform.up * 0.3f);
+        }
+        
     }
 }
